@@ -18,10 +18,7 @@ class HomeScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => EditTaskScreen(
-                      task: TaskEntity(),
-                    )));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditTaskScreen(task: TaskEntity())));
           },
           label: Row(
             children: const [Text('Add New Task'), Icon(CupertinoIcons.add)],
@@ -45,30 +42,19 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Text(
                           'To Do List',
-                          style: themeData.textTheme.headline6!
-                              .apply(color: themeData.colorScheme.onPrimary),
+                          style: themeData.textTheme.headline6!.apply(color: themeData.colorScheme.onPrimary),
                         ),
-                        Icon(
-                          CupertinoIcons.share,
-                          color: themeData.colorScheme.onPrimary,
-                        ),
+                        Icon(CupertinoIcons.share, color: themeData.colorScheme.onPrimary),
                       ],
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    const SizedBox(height: 16),
                     Container(
                       height: 38,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(19),
                         color: themeData.colorScheme.onPrimary,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 20,
-                          )
-                        ],
+                        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 20)],
                       ),
                       child: TextField(
                         onChanged: (value) {
@@ -92,13 +78,11 @@ class HomeScreen extends StatelessWidget {
                   return Consumer<Repository<TaskEntity>>(
                     builder: (context, repository, child) {
                       return FutureBuilder<List<TaskEntity>>(
-                        future:
-                            repository.getAll(searchKeyword: controller.text),
+                        future: repository.getAll(searchKeyword: controller.text),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             if (snapshot.data!.isNotEmpty) {
-                              return TaskList(
-                                  items: snapshot.data!, themeData: themeData);
+                              return TaskList(items: snapshot.data!, themeData: themeData);
                             } else {
                               return const EmptyState();
                             }
@@ -142,18 +126,12 @@ class TaskList extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Today',
-                      style: themeData.textTheme.headline6!
-                          .apply(fontSizeFactor: 0.9),
-                    ),
+                    Text('Today', style: themeData.textTheme.headline6!.apply(fontSizeFactor: 0.9)),
                     Container(
                       width: 70,
                       height: 3,
                       margin: const EdgeInsets.only(top: 4),
-                      decoration: BoxDecoration(
-                          color: primaryColor,
-                          borderRadius: BorderRadius.circular(1.5)),
+                      decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(1.5)),
                     )
                   ],
                 ),
@@ -162,20 +140,14 @@ class TaskList extends StatelessWidget {
                   textColor: secondaryTextColor,
                   elevation: 0,
                   onPressed: () {
-                    final taskRepository =
-                        Provider.of<Repository<TaskEntity>>(context,listen: false);
+                    final taskRepository = Provider.of<Repository<TaskEntity>>(context, listen: false);
                     taskRepository.deleteAll();
                   },
                   child: Row(
                     children: const [
                       Text('Delete All'),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Icon(
-                        CupertinoIcons.delete_solid,
-                        size: 18,
-                      ),
+                      SizedBox(width: 4),
+                      Icon(CupertinoIcons.delete_solid, size: 18),
                     ],
                   ),
                 ),
@@ -221,8 +193,7 @@ class _TaskItemState extends State<TaskItem> {
     }
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => EditTaskScreen(task: widget.task)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditTaskScreen(task: widget.task)));
       },
       onLongPress: () {
         widget.task.delete();
@@ -230,9 +201,7 @@ class _TaskItemState extends State<TaskItem> {
       child: Container(
         height: TaskItem.height,
         margin: const EdgeInsets.only(top: 8),
-        padding: const EdgeInsets.only(
-          left: 16,
-        ),
+        padding: const EdgeInsets.only(left: 16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(TaskItem.borderRadius),
           color: themeData.colorScheme.surface,
@@ -247,31 +216,20 @@ class _TaskItemState extends State<TaskItem> {
                 });
               },
             ),
-            const SizedBox(
-              width: 16,
-            ),
+            const SizedBox(width: 16),
             Expanded(
               child: Text(
                 widget.task.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    decoration: widget.task.isCompleted
-                        ? TextDecoration.lineThrough
-                        : null),
+                style: TextStyle(decoration: widget.task.isCompleted ? TextDecoration.lineThrough : null),
               ),
             ),
-            const SizedBox(
-              width: 8,
-            ),
+            const SizedBox(width: 8),
             Container(
               width: 5,
               height: TaskItem.height,
-              decoration: BoxDecoration(
-                  color: priorityColor,
-                  borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(TaskItem.borderRadius),
-                      bottomRight: Radius.circular(TaskItem.borderRadius))),
+              decoration: BoxDecoration(color: priorityColor, borderRadius: const BorderRadius.only(topRight: Radius.circular(TaskItem.borderRadius), bottomRight: Radius.circular(TaskItem.borderRadius))),
             )
           ],
         ),

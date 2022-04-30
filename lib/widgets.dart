@@ -11,13 +11,8 @@ class EmptyState extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SvgPicture.asset(
-          'assets/empty_state.svg',
-          width: 120,
-        ),
-        const SizedBox(
-          height: 12,
-        ),
+        SvgPicture.asset('assets/empty_state.svg', width: 120),
+        const SizedBox(height: 12),
         const Text('Your task list is empty'),
       ],
     );
@@ -27,8 +22,7 @@ class EmptyState extends StatelessWidget {
 class MyCheckBox extends StatelessWidget {
   final bool value;
   final GestureTapCallback onTap;
-  const MyCheckBox({Key? key, required this.value, required this.onTap})
-      : super(key: key);
+  const MyCheckBox({Key? key, required this.value, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +33,11 @@ class MyCheckBox extends StatelessWidget {
         width: 24,
         height: 24,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border:
-                !value ? Border.all(color: secondaryTextColor, width: 2) : null,
-            color: value ? primaryColor : null),
-        child: value
-            ? Icon(
-                CupertinoIcons.check_mark,
-                size: 16,
-                color: themeData.colorScheme.onPrimary,
-              )
-            : null,
+          borderRadius: BorderRadius.circular(12),
+          border: !value ? Border.all(color: secondaryTextColor, width: 2) : null,
+          color: value ? primaryColor : null,
+        ),
+        child: value ? Icon(CupertinoIcons.check_mark, size: 16, color: themeData.colorScheme.onPrimary) : null,
       ),
     );
   }
