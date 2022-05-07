@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:task_list/data/data.dart';
 import 'package:task_list/data/repo/repository.dart';
 import 'package:task_list/main.dart';
+import 'package:task_list/screens/edit/cubit/edittask_cubit.dart';
 import 'package:task_list/screens/edit/edit.dart';
 import 'package:task_list/screens/home/bloc/tasklist_bloc.dart';
 import 'package:task_list/widgets.dart';
@@ -20,7 +21,9 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => EditTaskScreen(task: TaskEntity())),
+              MaterialPageRoute(builder: (context) => BlocProvider<EdittaskCubit>(
+                create: (context) => EdittaskCubit(TaskEntity(), context.read<Repository<TaskEntity>>()),
+                child: const EditTaskScreen())),
             );
           },
           label: Row(children: const [Text('Add New Task'), Icon(CupertinoIcons.add)])),
@@ -194,7 +197,9 @@ class _TaskItemState extends State<TaskItem> {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => EditTaskScreen(task: widget.task)),
+          MaterialPageRoute(builder: (context) => BlocProvider<EdittaskCubit>(
+            create: (context) => EdittaskCubit(widget.task, context.read<Repository<TaskEntity>>()),
+            child: const EditTaskScreen())),
         );
       },
       onLongPress: () {
